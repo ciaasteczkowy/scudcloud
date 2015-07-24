@@ -34,6 +34,13 @@ var ScudCloud = {
 		);
 		desktop.count(total.toString());
     },
+    countChannels: function(){
+		var total=0;
+		$('li.unread').not('.hidden').each(function(i){
+			total+=1; }
+		);
+		desktop.countChannels(total.toString());
+    },
 	createSnippet: function(){
 		return TS.ui.snippet_dialog.start();		
 	},

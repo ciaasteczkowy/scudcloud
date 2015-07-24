@@ -149,5 +149,11 @@ class Wrapper(QWebView):
     @QtCore.pyqtSlot(int) 
     def count(self, value):
         self.messages = value;
+        # self.window.count()
+        self.call("countChannels")
+
+    @QtCore.pyqtSlot(int)
+    def countChannels(self, value):
+        self.channelsUnread = value
         self.window.count()
 

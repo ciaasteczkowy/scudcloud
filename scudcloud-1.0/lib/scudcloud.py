@@ -272,6 +272,10 @@ class ScudCloud(QtGui.QMainWindow):
     def focusInEvent(self, event):
         self.launcher.set_property("urgent", False)
         self.tray.stopAlert()
+        if self.channelsUnread == 0:
+            self.setWindowTitle('ScudCloud')
+        else:
+            self.setWindowTitle('[{0}]ScudCloud'.format(self.channelsUnread))
 
     def titleChanged(self):
         self.setWindowTitle(self.current().title())
@@ -312,6 +316,7 @@ class ScudCloud(QtGui.QMainWindow):
     def notify(self, title, message):
         self.notifier.notify(title, message)
         self.alert()
+        # self.setWindowTitle('[{0}]ScudCloud'.format(self.messages + 1))
 
     def alert(self):
         if not self.isActiveWindow():
@@ -327,13 +332,20 @@ class ScudCloud(QtGui.QMainWindow):
             else:
                 self.leftPane.alert(widget.team())
             total+=widget.messages
+            if widget.channelsUnread == 0:
+                self.setWindowTitle('ScudCloud')
+            else:
+                self.setWindowTitle('[{0}]ScudCloud'.format(widget.channelsUnread))
         if total > self.messages:
             self.alert()
         if 0 == total:
             self.launcher.set_property("count_visible", False)
             self.tray.setCounter(0)
+            # self.setWindowTitle('ScudCloud')
         else:
             self.tray.setCounter(total)
             self.launcher.set_property("count", total)
             self.launcher.set_property("count_visible", True)
+            # self.setWindowTitle('[{0}]ScudCloud'.format(total))
         self.messages = total
+        self.channelsUnread = widget.channelsUnread
