@@ -18,6 +18,8 @@ class Wrapper(QWebView):
         self.window = window
         with open(Resources.get_path("scudcloud.js"), "r") as f:
             self.js = f.read()
+        with open(Resources.get_path("custom.js"), "r") as f:
+            self.custom = f.read()
         self.setZoomFactor(self.window.zoom)
         self.page().setLinkDelegationPolicy(QtWebKit.QWebPage.DelegateAllLinks)
         self.connect(self, SIGNAL("urlChanged(const QUrl&)"), self.urlChanged)
